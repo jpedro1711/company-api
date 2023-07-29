@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import org.hibernate.annotations.ValueGenerationType;
+import org.springframework.hateoas.RepresentationModel;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,7 +15,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "TB_CUSTOMER")
-public class Customer implements Serializable{
+public class Customer extends RepresentationModel<Customer> implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
