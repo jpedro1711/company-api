@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
 
 import com.example.demo.DTO.CustomerDto;
 import com.example.demo.controllers.CustomerController;
@@ -63,13 +64,8 @@ public class CustomerService {
 	}
 	
 	public void remove(Long id) {
-		try {
-			customerRepository.deleteById(id);
-		} catch (EmptyResultDataAccessException e) {
-			throw new ResourceNotFoundException("Customer with id " + id + " was not found");
-		} catch (EntityNotFoundException e) {
-			throw new DatabaseException(e.getMessage());
-		}
+		var customer = customerRepository.findById(id).orElseThrow(() -> new ResourceAccessException("Customer not found"));
+		customerRepository.deleteById(customer.getId());
 	}
 	
 }
