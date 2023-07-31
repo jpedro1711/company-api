@@ -64,7 +64,7 @@ public class CustomerService {
 	}
 	
 	public void remove(Long id) {
-		var customer = customerRepository.findById(id).orElseThrow(() -> new ResourceAccessException("Customer not found"));
+		var customer = customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
 		customerRepository.deleteById(customer.getId());
 	}
 	
