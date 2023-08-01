@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,9 +38,13 @@ public class CustomerController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Customer> save(@RequestBody CustomerDto data) {
-		Customer created = customerService.create(data);
-		return ResponseEntity.status(HttpStatus.CREATED).body(created);
+	public ResponseEntity<Object> save(@RequestBody CustomerDto data) {
+		try {
+			Customer created = customerService.create(data);
+			return ResponseEntity.status(HttpStatus.CREATED).body(created);
+		} catch(DataIntegrityViolationException error) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: Duplicated Constraint in CPF or email");
+		}
 	}
 	
 	@PutMapping("/{id}")
