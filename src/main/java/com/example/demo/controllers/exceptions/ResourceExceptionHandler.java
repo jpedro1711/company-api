@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
 import com.example.demo.services.exceptions.DatabaseException;
-import com.example.demo.services.exceptions.InvalidJwtAuthenticationException;
 import com.example.demo.services.exceptions.ResourceNotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,12 +31,4 @@ public class ResourceExceptionHandler {
         StandartError error = new StandartError(Instant.now(), status.value(), err, e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(error);
     }
-    
-    @ExceptionHandler(InvalidJwtAuthenticationException.class)
-	public final ResponseEntity<StandartError> handleInvalidJwtAuthenticationException(Exception e, HttpServletRequest request) {
-    	String err = "Invalid JWT authentication error";
-        HttpStatus status = HttpStatus.FORBIDDEN;
-        StandartError error = new StandartError(Instant.now(), status.value(), err, e.getMessage(), request.getRequestURI());
-        return ResponseEntity.status(status).body(error);
-	}
 }
