@@ -40,6 +40,15 @@ public class CustomerService {
 		return assembler.toModel(list, link );
 	}
 	
+	public PagedModel<EntityModel<Customer>> findCustomerByName(String name, Pageable pageable) {
+		var list = this.customerRepository.findCustomersByName(name, pageable);
+		list
+			.stream()
+			.forEach(c -> c.add(linkTo(methodOn(CustomerController.class).findById(c.getId())).withSelfRel()));
+		Link link = linkTo(methodOn(CustomerController.class).findAll(pageable.getPageNumber(), pageable.getPageSize(), "ASC")).withSelfRel();
+		return assembler.toModel(list, link );
+	}
+	
 	public Customer findById(Long id) {
 		Optional<Customer> obj = this.customerRepository.findById(id);
 		if (obj.isEmpty()) {

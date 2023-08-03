@@ -1,13 +1,12 @@
 package com.example.demo.services;
 
 import static com.example.demo.services.common.Constants.CUSTOMER_DTO;
-import static com.example.demo.services.common.Constants.VALID_CUSTOMER;
 import static com.example.demo.services.common.Constants.INVALID_CUSTOMER;
 import static com.example.demo.services.common.Constants.INVALID_CUSTOMER_DTO;
+import static com.example.demo.services.common.Constants.VALID_CUSTOMER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
@@ -15,9 +14,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -28,7 +24,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.example.demo.domain.Customer;
 import com.example.demo.repositories.CustomerRepository;
 import com.example.demo.services.exceptions.ResourceNotFoundException;
 
