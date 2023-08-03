@@ -1,0 +1,3 @@
+INSERT INTO tb_permission VALUES(1, 'ADMIN');
+INSERT INTO tb_permission VALUES(2, 'MANAGER');
+INSERT INTO tb_permission VALUES(3, 'COMMON_USER');

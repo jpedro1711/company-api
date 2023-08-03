@@ -36,27 +36,6 @@ class CustomerServiceTest {
 	
 	@InjectMocks
 	private CustomerService service;
-	
-	/*
-	@Test
-	void testFindAll_ReturnsAllCustomers() {
-		List<Customer> list = new ArrayList<>();
-		list.add(VALID_CUSTOMER);
-		when(repository.findAll()).thenReturn(list);
-		var result = service.findAll();
-		assertNotNull(result);
-		assertThat(result.size()).isEqualTo(1);
-	}
-	*/
-	
-	/*
-	@Test
-	void testFindAll_ReturnsNoCustomers() {
-		when(repository.findAll()).thenReturn(Collections.EMPTY_LIST);
-		var result = service.findAll();
-		assertThat(result).isEmpty();
-	}
-	*/
 
 	@Test
 	void FindById_WithExistingId_ReturnOptionalOfCustomer() {
