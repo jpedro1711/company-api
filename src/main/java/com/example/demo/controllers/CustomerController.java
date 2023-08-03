@@ -1,9 +1,13 @@
 package com.example.demo.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.DTO.CustomerDto;
@@ -26,9 +31,14 @@ public class CustomerController {
 	private CustomerService customerService;
 	
 	@GetMapping
-	public ResponseEntity<List<Customer>> findAll() {
-		List<Customer> result= this.customerService.findAll();
-		return ResponseEntity.status(HttpStatus.OK).body(result);
+	public ResponseEntity<PagedModel<EntityModel<Customer>>> findAll(
+			@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@RequestParam(value = "limit", defaultValue = "15") Integer limit,
+			@RequestParam(value = "direction", defaultValue = "asc") String direction
+			) {
+		var sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC;
+		Pageable pageable = PageRequest.of(page, limit, Sort.by(sortDirection, "name"));
+		return ResponseEntity.status(HttpStatus.OK).body(customerService.findAll(pageable));
 	}
 	
 	@GetMapping("/{id}")

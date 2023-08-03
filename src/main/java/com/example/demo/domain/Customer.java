@@ -3,7 +3,6 @@ package com.example.demo.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
-import org.hibernate.annotations.ValueGenerationType;
 import org.springframework.hateoas.RepresentationModel;
 
 import jakarta.persistence.Column;
@@ -24,8 +23,6 @@ public class Customer extends RepresentationModel<Customer> implements Serializa
 	private Long id;
 	private String name;
 	private String address;
-	@Column(unique = true, nullable = false)
-	private String cpf;
 	@Column(name = "phone_number")
 	private String phoneNumber;
 	@Column(nullable = false, unique = true)
@@ -35,12 +32,11 @@ public class Customer extends RepresentationModel<Customer> implements Serializa
 		
 	}
 
-	public Customer(Long id, String name, String address, String cpf, String phoneNumber, String email) {
+	public Customer(Long id, String name, String address, String phoneNumber, String email) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.address = address;
-		this.cpf = cpf;
 		this.phoneNumber = phoneNumber;
 		this.email = email;
 	}
@@ -67,14 +63,6 @@ public class Customer extends RepresentationModel<Customer> implements Serializa
 
 	public void setAddress(String address) {
 		this.address = address;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
 	}
 
 	public String getPhoneNumber() {

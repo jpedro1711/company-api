@@ -1,25 +1,24 @@
 package com.example.demo.services;
 
-import java.util.List;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
-import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.ResourceAccessException;
 
 import com.example.demo.DTO.CustomerDto;
 import com.example.demo.controllers.CustomerController;
 import com.example.demo.domain.Customer;
 import com.example.demo.repositories.CustomerRepository;
-import com.example.demo.services.exceptions.DatabaseException;
 import com.example.demo.services.exceptions.ResourceNotFoundException;
-
-import jakarta.persistence.EntityNotFoundException;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 
 @Service
@@ -29,12 +28,16 @@ public class CustomerService {
 	@Autowired
 	private CustomerRepository customerRepository;
 	
-	public List<Customer> findAll() {
-		List<Customer> list = this.customerRepository.findAll();
+	@Autowired
+	PagedResourcesAssembler<Customer> assembler;
+	
+	public PagedModel<EntityModel<Customer>> findAll(Pageable pageable) {
+		var list = this.customerRepository.findAll(pageable);
 		list
 			.stream()
 			.forEach(c -> c.add(linkTo(methodOn(CustomerController.class).findById(c.getId())).withSelfRel()));
-		return list;
+		Link link = linkTo(methodOn(CustomerController.class).findAll(pageable.getPageNumber(), pageable.getPageSize(), "ASC")).withSelfRel();
+		return assembler.toModel(list, link );
 	}
 	
 	public Customer findById(Long id) {
