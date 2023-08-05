@@ -21,9 +21,13 @@ public class Customer extends RepresentationModel<Customer> implements Serializa
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@Column(nullable = false)
 	private String name;
+
+	@Column(nullable = false)
 	private String address;
-	@Column(name = "phone_number")
+	@Column(name = "phone_number", nullable = false)
 	private String phoneNumber;
 	@Column(nullable = false, unique = true)
 	private String email;
