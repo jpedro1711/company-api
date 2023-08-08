@@ -33,7 +33,7 @@ public class CustomerController {
 	@GetMapping
 	public ResponseEntity<PagedModel<EntityModel<Customer>>> findAll(
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
-			@RequestParam(value = "limit", defaultValue = "15") Integer limit,
+			@RequestParam(value = "limit", defaultValue = "5") Integer limit,
 			@RequestParam(value = "direction", defaultValue = "asc") String direction
 			) {
 		var sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC;
@@ -44,7 +44,7 @@ public class CustomerController {
 	@GetMapping(value = "/name/{name}")
 	public ResponseEntity<PagedModel<EntityModel<Customer>>> findCustomerByName(
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
-			@RequestParam(value = "limit", defaultValue = "15") Integer limit,
+			@RequestParam(value = "limit", defaultValue = "5") Integer limit,
 			@PathVariable(value = "name") String name,
 			@RequestParam(value = "direction", defaultValue = "asc") String direction
 			) {
