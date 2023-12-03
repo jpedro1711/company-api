@@ -3,10 +3,14 @@ package com.example.demo.services;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import com.example.demo.DTO.CustomerResponseDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.EntityModel;
@@ -38,6 +42,14 @@ public class CustomerService {
 			.forEach(c -> c.add(linkTo(methodOn(CustomerController.class).findById(c.getId())).withSelfRel()));
 		Link link = linkTo(methodOn(CustomerController.class).findAll(pageable.getPageNumber(), pageable.getPageSize(), "ASC")).withSelfRel();
 		return assembler.toModel(list, link );
+	}
+
+	public List<Customer> getCompleteCustomersList() {
+		List<Customer> res = customerRepository.findAll();
+
+
+
+		return res;
 	}
 	
 	public PagedModel<EntityModel<Customer>> findCustomerByName(String name, Pageable pageable) {

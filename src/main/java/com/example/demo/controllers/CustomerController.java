@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.DTO.CustomerResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +25,8 @@ import com.example.demo.DTO.CustomerDto;
 import com.example.demo.domain.Customer;
 import com.example.demo.services.CustomerService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/customers")
 public class CustomerController {
@@ -39,6 +42,17 @@ public class CustomerController {
 		var sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC;
 		Pageable pageable = PageRequest.of(page, limit, Sort.by(sortDirection, "name"));
 		return ResponseEntity.status(HttpStatus.OK).body(customerService.findAll(pageable));
+	}
+
+	@GetMapping(value = "/completeList")
+	public ResponseEntity getAllCustomersList() {
+		List<Customer> result = customerService.getCompleteCustomersList();
+
+		if (result.size() == 0) {
+			return ResponseEntity.status(HttpStatus.OK).body("0 results");
+		}
+
+		return ResponseEntity.status(HttpStatus.OK).body(result);
 	}
 	
 	@GetMapping(value = "/name/{name}")

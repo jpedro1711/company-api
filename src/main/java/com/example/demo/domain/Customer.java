@@ -3,6 +3,7 @@ package com.example.demo.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
 
 import jakarta.persistence.Column;
@@ -27,22 +28,43 @@ public class Customer extends RepresentationModel<Customer> implements Serializa
 
 	@Column(nullable = false)
 	private String address;
-	@Column(name = "phone_number", nullable = false)
+	@Column(nullable = false)
 	private String phoneNumber;
 	@Column(nullable = false, unique = true)
 	private String email;
+	private String gender;
+	private String country;
+	private String city;
+	private String creditCardType;
+	private Integer childrenCount;
+	private Boolean isMarried;
+	private double salary;
 	
 	public Customer() {
 		
 	}
 
-	public Customer(Long id, String name, String address, String phoneNumber, String email) {
-		super();
+	public Customer(Long id, String name, String address, String phoneNumber, String email, String gender, String country, String city, String creditCardType, Integer childrenCount, Boolean isMarried, double salary) {
 		this.id = id;
 		this.name = name;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
 		this.email = email;
+		this.gender = gender;
+		this.country = country;
+		this.city = city;
+		this.creditCardType = creditCardType;
+		this.childrenCount = childrenCount;
+		this.isMarried = isMarried;
+		this.salary = salary;
+	}
+
+	public double getSalary() {
+		return salary;
+	}
+
+	public void setSalary(double salary) {
+		this.salary = salary;
 	}
 
 	public Long getId() {
@@ -83,6 +105,54 @@ public class Customer extends RepresentationModel<Customer> implements Serializa
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getCreditCardType() {
+		return creditCardType;
+	}
+
+	public void setCreditCardType(String creditCardType) {
+		this.creditCardType = creditCardType;
+	}
+
+	public Integer getChildrenCount() {
+		return childrenCount;
+	}
+
+	public void setChildrenCount(Integer childrenCount) {
+		this.childrenCount = childrenCount;
+	}
+
+	public Boolean getMarried() {
+		return isMarried;
+	}
+
+	public void setMarried(Boolean married) {
+		isMarried = married;
 	}
 
 	@Override
