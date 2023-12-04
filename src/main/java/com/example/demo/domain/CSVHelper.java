@@ -8,6 +8,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,6 +19,8 @@ public class CSVHelper {
 
         try (ByteArrayOutputStream out = new ByteArrayOutputStream();
              CSVPrinter csvPrinter = new CSVPrinter(new PrintWriter(out), format);) {
+            List<String> header = Arrays.asList("Id", "Cidade", "País", "Salário", "Casado", "Gênero", "Filhos", "Cartão de crédito", "Nome", "E-mail");
+            csvPrinter.printRecord(header);
             for (Customer c : customers) {
                 List<String> data = Arrays.asList(
                         String.valueOf(c.getId()),

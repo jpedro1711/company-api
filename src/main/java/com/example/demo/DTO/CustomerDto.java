@@ -1,6 +1,7 @@
 package com.example.demo.DTO;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 public record CustomerDto(
@@ -12,9 +13,9 @@ public record CustomerDto(
 		@NotBlank String country,
 		@NotBlank String city,
 		@NotBlank String creditCardType,
-		@NotBlank String childrenCount,
+		@NotBlank Integer childrenCount,
 
-		@NotBlank String isMarried,
+		@NotEmpty boolean isMarried,
 		@NotNull double salary
 		) {
 }
